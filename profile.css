@@ -1,0 +1,63 @@
+body {
+  background: #efefef;
+  margin:0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f3f3f3;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  float: left;
+}
+
+li a {
+    display: block;
+    color: #000;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.el-input {
+    display: block;
+    margin-top: 7px;
+}
+
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.el-col {
+  border-radius: 5px;
+}
+
+.el-menu {
+  border-radius: 5px;
+  margin: 0;
+  padding: 0;
+}
+
+#main_card {
+  background: #FFF;
+  border-radius: 5px;
+  min-height: 100px;
+}
+
+el-tabs {
+  margin-top: 100px;
+}
+
+.image {
+  width: 55%;
+  display: block;
+}

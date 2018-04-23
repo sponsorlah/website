@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Basic Info</title>
+  <link rel="stylesheet" href="postevent02.css">
+</head>
+<body>
+  <div id="form">
+    <el-row>
+      <ul id="navbar">
+        <li><a href="">Home</a></li>
+        <li><a href="">My Profile</a></li>
+        <li><a href="">Sign Out</a></li>
+        <li><a href=""></a></li>
+        <li><el-input
+          placeholder="Search"
+          prefix-icon="el-icon-search"
+          v-model="input21"
+          size="small"
+          class="search-box">
+        </el-input></li>
+      </ul>
+    </el-row>
+
+    <el-row>
+      <el-col align="middle">
+        <h1>Sponsor Package</h1>
+        <p>Let the sponsors know what you offer!</p>
+        <hr width="80%">
+      </el-col>
+    </el-row>
+
+    <el-row>
+
+      <el-col :span="5" offset="6" align="middle">
+        <el-card class="package-card">
+          <el-button type="info" icon="el-icon-circle-plus">Add new package</el-button>
+          <p>or select from predefined package</p>
+          <el-button type="text" icon="el-icon-circle-plus" class="text-button">Venue Sponsor</el-button>
+          <br> <!--need find a way to get rid of this-->
+          <el-button type="text" icon="el-icon-circle-plus" class="text-button">Cash Sponsor</el-button>
+        </el-card>
+      </el-col>
+
+      <el-col :span="5" offset="1">
+        <el-card class="package-card">
+          <!-- card to display the existing package -->
+        </el-card>
+      </el-col>
+
+    </el-row>
+  </div>
+
+  <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+
+  <script src="form.js"></script>
+  <script>ELEMENT.locale(ELEMENT.lang.en)</script>
+</body>
+</html>

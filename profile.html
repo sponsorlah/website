@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Profile</title>
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+  <div id="profile">
+    <!-- navigation bar -->
+    <el-row>
+      <ul id="navbar">
+        <li><a href="">Home</a></li>
+        <li><a href="">My Profile</a></li>
+        <li><a href="">Sign Out</a></li>
+        <li><a href=""></a></li>
+        <li><el-input
+    placeholder="Search"
+    prefix-icon="el-icon-search"
+    v-model="input21" size="small"> 
+  </el-input></li>
+      </ul>
+    </el-row>
+
+    <!-- main card -->
+    <el-row>
+
+      <el-col :span="14" :offset="1">
+        <el-row>
+          <el-card shadow="always">
+            <el-col :span="12">
+              <el-row>
+                <img v-bind:src="logoURL" class="image">
+              </el-row>
+              <el-row>
+                <p>{{description}}</p>
+              </el-row>
+              <el-row>
+                <p>{{type}}</p>
+              </el-row>
+            </el-col>
+            <el-col :span="5" :offset="7">
+              <el-row>
+                <p><strong>Location</strong></p>
+                <p>{{location}}</p>
+              </el-row>
+              <el-row>
+                <p><strong>Followers</strong></p>
+                <p>{{followers}}</p>
+              </el-row>
+            </el-col>
+          </el-card>
+        </el-row>
+
+        <el-row>
+          <el-tabs type="card" @tab-click="handleClick" value="first">
+            <el-tab-pane label="Overview" name="first" >
+              <el-row :span="12" ><div> <el-card shadow="always">
+                <!--This is not a form. This is used to display infomation of the company. A edit button is
+              required to be clicked in order to change the infomation-->
+                <h4>Name</h4>
+                <p>{{name}}</p>
+                <h4>Location</h4>
+                <p>{{location}}</p>
+                <h4>Contact number</h4>
+                <p>{{contactNum}}</p>
+                <h4>E-mail address</h4>
+                <p>{{email}}</p>
+                <h4>Social Media</h4>
+              </el-card></div></el-row>
+            </el-tab-pane>
+          </el-tabs>
+        </el-row>
+      </el-col>
+
+      <el-col :span="7" :offset="1">
+        <el-row>
+          <el-card shadow="always">
+            <h4>Account setting</h4>
+            <a href="#">Edit profile information</a>
+          </el-card>
+        </el-row>
+        <el-row>
+          <el-card shadow="always">
+            <span><strong>Upcoming Event</strong></span>
+            <!-- use a loop to display every Event -->
+          </el-card>
+        </el-row>
+        <el-row>
+          <el-card shadow="always">
+            <span><strong>You're sponsoring</strong></span>
+            <!-- again use loop here -->
+          </el-card>
+        </el-row>
+        <el-card shadow="always">
+          <span><strong>History</strong></span>
+          <!-- loop again... -->
+        </el-card>
+      </el-col>
+
+    </el-row>
+  </div>
+
+  <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>
