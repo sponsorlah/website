@@ -155,7 +155,7 @@ Vue.component("advertisement", {
         <h2 class="demonstration">This is a title</h2>
         <el-carousel height="600px" indicator-position="outside">
           <el-carousel-item v-for="item in items" :key="item.id">
-            <img :src=item.link class="ads">
+            <div><img :src=item.link class="ads"></div>
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -186,7 +186,7 @@ Vue.component("advertisement", {
 });
 
 Vue.component("navbar", {
-    template: `
+  template: `
     <div class="navbar">
       <el-row>
         <el-col :span="12">
@@ -194,22 +194,22 @@ Vue.component("navbar", {
         </el-col>
         <el-col :span="12">
           <div class="right">
-            <el-button type="text">Create An Event</el-button>
+            <el-button type="text" @click="redirect('postevent01.html')">Create An Event</el-button>
             <el-button type="text" @click="signUpFormVisible = true">Sign Up</el-button>
 
             <el-dialog title="Sign Up" :visible.sync="signUpFormVisible">
-              <el-form :model="form">
+              <el-form @submit.prevent="addProfiles">
                 <el-form-item label="Name" :label-width="formLabelWidth">
-                  <el-input v-model="form.name" auto-complete="off"></el-input>
+                  <el-input v-model="newProfile.name" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Email Address" :label-width="formLabelWidth">
-                  <el-input v-model="form.email" placeholder="Your email address"></el-input>
+                  <el-input v-model="newProfile.email" placeholder="Your email address"></el-input>
                 </el-form-item>
                 <el-form-item label="Phone Number" :label-width="formLabelWidth">
-                  <el-input v-model="form.phonenumber" placeholder="Your Phone Number"></el-input>
+                  <el-input v-model="newProfile.contact" placeholder="Your Phone Number"></el-input>
                 </el-form-item>
                 <el-form-item label="Password" :label-width="formLabelWidth">
-                  <el-input v-model="form.password" placeholder="Your Password"></el-input>
+                  <el-input v-model="newProfile.password" placeholder="Your Password"></el-input>
                 </el-form-item>
                 
               </el-form>
@@ -222,68 +222,59 @@ Vue.component("navbar", {
         </el-col>
       </el-row>
     </div>
+    
   `,
 
-    data() {
-      return {
-        user: {
-          username: "",
-          age: "",
-          email: ""
-        },
+  data() {
+    return {
+      signUpFormVisible: false,
 
-        signUpFormVisible: false,
-        form: {
-          name: "",
-          email: "",
-          phonenumber: "",
-          password: "",
+      formLabelWidth: "120px",
 
-        },
-        formLabelWidth: "120px",
-
-        signUp() {
-
-          db.ref('users/' + this.form.name).push({
-            name: this.form.name,
-            email: this.form.email,
-            phonenumber: this.form.phonenumber,
-            password: this.form.password,
-          });
-          
-          this.signUpFormVisible = false;
-          this.form.name = '',
-            this.form.email = '',
-            this.form.phonenumber = '',
-            this.form.password = ''
-        },
-
-        getName() {
-          var username = db.ref('users/');
-          username.on('value', function (snapshot) {
-            updateStarCount(postElement, snapshot.val());
-          });
-          console.log(username)
-        }
-      };
-    },
-
-
-    method: {
-      clickEvent(url) {
-        window.location.href = url;
-      },
-
+      newProfile: {
+        name: '',
+        email: '',
+        contact: '',
+        password: ''
+      }
 
     }
-  }
+  },
 
-);
+  firebase: {
+    profiles: profilesRef
+  },
+
+  methods: {
+    signUp() {
+      profilesRef.push(this.newProfile);
+      this.newProfile.name = '';
+      this.newProfile.email = '';
+      this.newProfile.contact = '';
+      this.newProfile.password = '';
+    },
+  }
+});
+
+
+
+
+
+
+var profilesRef = db.ref('users/profiles/');
 
 var app = new Vue({
   el: "#app",
+
   data() {
-    return {};
+    return {
+
+    }
+
   },
-  methods: {}
+  firebase: {},
+
+  methods: {
+
+  }
 });
