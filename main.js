@@ -191,6 +191,8 @@ Vue.component("advertisement", {
 Vue.component("navbar", {
   template: `
     <div class="navbar">
+    
+
       <el-row>
         <el-col :span="12">
           <img src="images/logo.png" alt="SponsorLah Logo" height="30px" width="100px" class="logo">
@@ -201,7 +203,6 @@ Vue.component("navbar", {
             <el-button type="text" @click="signUpFormVisible = true">Sign In</el-button>
 
             <el-dialog title="Sign Up" :visible.sync="signUpFormVisible">
-           
               <el-form @submit.prevent="addProfiles">
                 <el-form-item label="Name" :label-width="formLabelWidth">
                   <el-input v-model="newProfile.name" auto-complete="off"></el-input>
@@ -296,6 +297,8 @@ var app = new Vue({
 
   data() {
     return {
+
+      test: '123123123',
       event: {
         title: '',
         type: '',

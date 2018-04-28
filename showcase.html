@@ -1,0 +1,289 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        .el-carousel__item h3 {
+            color: #475669;
+            font-size: 14px;
+            opacity: 0.75;
+            line-height: 150px;
+            margin: 0;
+        }
+
+        .el-carousel__item:nth-child(2n) {
+            background-color: #99a9bf;
+        }
+
+        .el-carousel__item:nth-child(2n+1) {
+            background-color: #d3dce6;
+        }
+
+        .el-select .el-input {
+            width: 110px;
+        }
+
+        .input-with-select .el-input-group__prepend {
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+
+<body>
+    <!-- <nav> -->
+    <div id="app">
+        <!-- <div>
+            <el-row>
+                <el-col :span="8">
+                    <el-button type="text">Start An Event</el-button>
+                </el-col>
+                <el-col :span="8">
+                    <div align="middle">
+                        <img src="images/logo.png" alt="SponsorLah Logo" height="30px" width="100px" class="logo">
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div align="right">
+                        <el-button type="text">My Profile</el-button>
+                    </div>
+                </el-col>
+            </el-row>
+        </div> -->
+        <!-- </nav> -->
+        <!-- <project> -->
+        <div>
+            <el-row>
+                <el-col align="middle">
+                    <h1>Event Name</h1>
+                    <p>Type</p>
+                </el-col>
+            </el-row>
+
+            <el-row :gutter="50" style="padding-left: 50px;padding-top: 50px">
+                <el-col :span="15">
+                    <el-row>
+
+                        <img src="Image/Capture 2.PNG" alt="Project Media" height="500px" width="100%">
+
+                    </el-row>
+
+                    <el-row style="padding-top: 20px">
+                        <el-tag>Recommendedtag</el-tag>
+
+                        <el-tag>Category</el-tag>
+
+                        <el-tag>Location</el-tag>
+                    </el-row>
+                </el-col>
+
+                <el-col :span="9">
+                    <el-row style="padding-bottom: 30px">
+                        <el-progress :percentage="70"></el-progress>
+                    </el-row>
+
+                    <el-row style="font-size:50px">
+                        <span>amount</span>
+                    </el-row>
+                    <el-row style="padding-bottom: 30px">
+                        pledged of
+                        <span>totalamount</span>
+                    </el-row>
+                    <el-row style="font-size:50px">
+                        <span>number</span>
+                    </el-row>
+                    <el-row style="padding-bottom: 30px">
+                        sponsors
+                    </el-row>
+                    <el-row style="font-size:50px">
+                        <span>days</span>
+                    </el-row>
+                    <el-row style="padding-bottom: 30px">
+                        days to go
+                    </el-row>
+                    <el-row style="padding-bottom: 10px">
+                        <el-button type="success">Support this event now</el-button>
+                    </el-row>
+                    <el-row>
+                        <el-button>Remind me</el-button>
+                    </el-row>
+                </el-col>
+
+            </el-row>
+        </div>
+        <div>
+            <el-row style="padding-top: 30px">
+                <el-col span="16">
+                    <el-row style="padding-left: 50px;padding-top: 50px">
+                        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+                            <el-menu-item index="1">Campaign</el-menu-item>
+                            <el-menu-item index="2">FAQ</el-menu-item>
+                            <el-menu-item index="3">Updates</el-menu-item>
+                            <el-menu-item index="4">Comments</el-menu-item>
+                            <el-menu-item index="5">Commnuity</el-menu-item>
+                        </el-menu>
+                    </el-row>
+
+                    <el-row style="padding-left: 50px">
+                        <el-row style="padding-bottom: 40px">
+                            <span style="font-size: 40px">Demographics</span>
+                        </el-row>
+                        <el-row>
+                            <el-col span="6">
+                                <el-progress type="circle" :percentage="0"></el-progress>
+                            </el-col>
+                            <el-col span="6">
+                                <el-progress type="circle" :percentage="25"></el-progress>
+                            </el-col>
+                            <el-col span="6">
+                                <el-progress type="circle" :percentage="80" color="#8e71c7"></el-progress>
+                            </el-col>
+                            <el-col span="6">
+                                <el-progress type="circle" :percentage="100" status="success"></el-progress>
+                            </el-col>
+                        </el-row>
+                        <el-row style="padding-top: 30px">
+                            <el-col span="6">
+                                <el-progress type="circle" :percentage="50"></el-progress>
+                            </el-col>
+                        </el-row>
+                    </el-row>
+
+                    <el-row style="padding-left: 50px;padding-top: 50px">
+                        <el-row stlye="padding-bottom: 40px">
+                            <span style="font-size: 40px">Photo Gallery</span>
+                        </el-row>
+                        <el-row>
+                            <div class="block" style="width:90%">
+                                <el-carousel trigger="click" height="500px">
+                                    <el-carousel-item v-for="item in 4" :key="item">
+                                        <h3>{{ item }}</h3>
+                                    </el-carousel-item>
+                                </el-carousel>
+                            </div>
+
+                        </el-row>
+                    </el-row>
+
+                    <el-row style="padding-left: 50px;padding-top: 100px">
+                        <el-row style="font-size:25px">
+                            See what we're working on via our social media:
+                        </el-row>
+                        <el-row style="padding-top:20px">
+                            Website:
+                        </el-row>
+                        <el-row style="padding-top:20px">
+                            Facebook:
+                        </el-row>
+                        <el-row style="padding-top:20px">
+                            Instagram：
+                        </el-row>
+                    </el-row>
+
+                    <el-row style="padding-left: 50px;padding-top: 100px">
+                        <el-row style="font-size:25px">
+                            Risks and Challenges
+                        </el-row>
+                    </el-row>
+
+                    <el-row style="padding-left: 50px;padding-top: 100px">
+                        Question about this event?
+                        <el-button type="text">Check out the FAQ</el-button>
+                    </el-row>
+                    <el-row style="padding-left: 50px">
+                        <el-button>Report this event to SponsorLah</el-button>
+                    </el-row>
+                </el-col>
+
+                <el-col span="7">
+                    <el-row style="padding-top: 60px">
+                        <el-button type="success">Support this event now</el-button>
+                        <el-button>Remind me</el-button>
+                    </el-row>
+                    <el-row style="padding-top: 50px">
+                        <span style="font-size:20px">Sponsor</span>
+                    </el-row>
+                    <el-row>
+                        <el-card class="box-card">
+                            <div align="middle">
+                                <span>I can sponsor this amount</span>
+                                <div style="margin-top: 15px;">
+
+                                    <div style="margin-top: 15px;">
+                                        <el-input placeholder="Please input" v-model="input5" class="input-with-select">
+                                            <el-select v-model="select" slot="prepend" placeholder="Select">
+                                                <el-option label="RMB" value="1"></el-option>
+                                                <el-option label="Yen" value="2"></el-option>
+                                                <el-option label="Pounds" value="3"></el-option>
+                                            </el-select>
+                                        </el-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-row>
+                    <el-row>
+                        <el-row style="padding-top: 50px">
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <span>I can sponsor this amount</span>
+                                   
+                                </div>
+                            </el-card>
+                        </el-row>
+                    </el-row>
+                    <el-row>
+                        <el-row style="padding-top: 50px">
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <span>Myr 10 or more</span>
+                                    
+                                </div>
+                            </el-card>
+                        </el-row>
+                    </el-row>
+                    <el-row>
+                        <el-row style="padding-top: 50px">
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <span>Myr 100 or more</span>
+                                    
+                                </div>
+                            </el-card>
+                        </el-row>
+                    </el-row>
+                    <el-row>
+                        <el-row style="padding-top: 50px">
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <span>Myr 1000 or more</span>
+                                    
+                                </div>
+                            </el-card>
+                        </el-row>
+                    </el-row>
+                </el-col>
+
+            </el-row>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    <!-- </project> -->
+    <!-- <featuredsponsors></featuredsponsors>
+    <featuredevents></featuredevents> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="showcase.js"></script>
+
+</body>
+
+</html>
