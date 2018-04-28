@@ -1,17 +1,30 @@
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Main Page</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-database.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script> -->
+
+    <script src="firebase.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-
-    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.3.6/lib/theme-chalk/index.css">
+    <!-- <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" /> -->
+    <!-- <script type="text/javascript" src="firebaseUI.js"></script> -->
     <style>
-
         html {
-          overflow-y: scroll;
+            overflow-y: scroll;
         }
 
         body {
-          position: absolute;
+            position: absolute;
         }
 
         .el-tabs--left .el-tabs__header.is-left {
@@ -123,112 +136,102 @@
             <el-tabs :tab-position="tabPosition" style="height: 100%;">
 
                 <el-tab-pane label="1.Basic Info">
-                  <el-row>
-                      <el-col>
-                          <div align="middle">
-                              <h1>Event Name</h1>
-                              <p>Type</p>
-                              <hr align="middle" width="700px">
-                          </div>
-                      </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="12" style="padding-right:50px;padding-left:50px">
-                        <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign">
-                            <el-form-item label="Title">
-                                <el-input v-model="formLabelAlign.title" placeholder="Title"></el-input>
-                            </el-form-item>
-                            <el-form-item label="Type">
-                                <el-input v-model="formLabelAlign.type" placeholder="Type"></el-input>
-                            </el-form-item>
-                            <el-form-item label="Location">
-                                <el-input v-model="formLabelAlign.location" placeholder="Location"></el-input>
-                            </el-form-item>
-                            <el-form-item label="Date">
-                                <el-col :span="12">Start date
-                                    <el-date-picker type="date" placeholder="Pick a date" v-model="form.date1" style="width: 80%;" style="padding-right:50px"></el-date-picker>
-                                </el-col>
+                    <el-row>
+                        <el-col>
+                            <div align="middle">
+                                <h1>Event Name</h1>
+                                <p>Type</p>
+                                <hr align="middle" width="700px">
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12" style="padding-right:50px;padding-left:50px">
+                            <el-form :label-position="labelPosition" label-width="100px" :model="form">
+                                <el-form-item label="Title">
+                                    <el-input v-model="form.title" placeholder="Title"></el-input>
+                                </el-form-item>
+                                <el-form-item label="Type">
+                                    <el-input v-model="form.type" placeholder="Type"></el-input>
+                                </el-form-item>
+                                <el-form-item label="Location">
+                                    <el-input v-model="form.location" placeholder="Location"></el-input>
+                                </el-form-item>
+                                <el-form-item label="Date">
+                                    <el-col :span="12">Start date
+                                        <el-date-picker type="date" placeholder="Pick a date" v-model="form.dateStart" style="width: 80%;" style="padding-right:50px"></el-date-picker>
+                                    </el-col>
 
-                                <el-col :span="12">End date
-                                    <el-date-picker type="date" placeholder="Pick a date" v-model="form.date2" style="width: 80%;"></el-date-picker>
-                                </el-col>
+                                    <el-col :span="12">End date
+                                        <el-date-picker type="date" placeholder="Pick a date" v-model="form.dateEnd" style="width: 80%;"></el-date-picker>
+                                    </el-col>
 
-                            </el-form-item>
-                            <el-form-item label="Type and estimated amount of participants">
-                                <el-input style="padding-bottom:30px" v-model="formLabelAlign.participants" placeholder="Type of participants"></el-input>
-                                <el-input style="width: 70%" v-model="formLabelAlign.range" placeholder="Choose range"></el-input>
-                            </el-form-item>
-                        </el-form>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-row>
-                            <span>Logo</span>
-                            <el-upload style="padding-top: 20px" class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview"
+                                </el-form-item>
+                                <el-form-item label="Type and estimated amount of participants">
+                                    <el-input style="padding-bottom:30px" v-model="form.participants" placeholder="Type of participants"></el-input>
+                                    <el-input style="width: 70%" v-model="form.range" placeholder="Choose range"></el-input>
+                                </el-form-item>
+                            </el-form>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-row>
+                                <span>Logo</span>
+                                <!-- <el-upload style="padding-top: 20px" class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview"
                                 :on-remove="handleRemove" :file-list="fileList" multiple>
                                 <i class="el-icon-upload"></i>
                                 <div class="el-upload__text">Drop file here or
                                     <em>click to upload</em>
                                 </div>
                                 <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
-                            </el-upload>
-                        </el-row>
-                        <el-row>
-                            <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign" style="padding-top: 50px">
-                                <el-form-item label="Link to your event">
-                                    <el-input v-model="formLabelAlign.link" placeholder="URL"></el-input>
-                                </el-form-item>
-                                <el-form-item label="Social Media">
-                                    <el-row style="padding-bottom: 10px">
-                                        <el-col :span="4">
-                                            <img src="Image/facebook_logos_PNG19761.png" alt="Project Media" height="40px" width="40px">
-                                        </el-col>
-                                        <el-col :span="12">
-                                            <el-input v-model="formLabelAlign.link" placeholder="Facebook URL"></el-input>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row style="padding-bottom: 10px">
-                                        <el-col :span="4">
-                                            <img src="Image/580b57fcd9996e24bc43c53e.png" alt="Project Media" height="40px" width="40px">
-                                        </el-col>
-                                        <el-col :span="12">
-                                            <el-input v-model="formLabelAlign.link" placeholder="Twitter URL"></el-input>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row style="padding-bottom: 10px">
-                                        <el-col :span="4">
-                                            <img src="Image/Logo_google+_2015.png" alt="Project Media" height="40px" width="40px">
-                                        </el-col>
-                                        <el-col :span="12">
-                                            <el-input v-model="formLabelAlign.link" placeholder="Google+ URL"></el-input>
-                                        </el-col>
-                                    </el-row>
-                                </el-form-item>
-                            </el-form>
-                        </el-row>
-                        <el-row>
-                            <div align="right">
-                                <el-button type="info">Next</el-button>
-                            </div>
-                        </el-row>
-                      </el-row>
+                            </el-upload> -->
+                            </el-row>
+                            <el-row>
+                                <el-form :label-position="labelPosition" label-width="100px" :model="form" style="padding-top: 50px">
+                                    <el-form-item label="Website to your event">
+                                        <el-input v-model="form.website" placeholder="URL"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="Social Media">
+                                        <el-row style="padding-bottom: 10px">
+                                            <el-col :span="4">
+                                                <img src="images/facebook.jpeg" alt="Project Media" height="40px" width="40px">
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <el-input v-model="form.facebook" placeholder="Facebook URL"></el-input>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row style="padding-bottom: 10px">
+                                            <el-col :span="4">
+                                                <img src="images/twitter.jpeg" alt="Project Media" height="40px" width="40px">
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <el-input v-model="form.twitter" placeholder="Twitter URL"></el-input>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row style="padding-bottom: 10px">
+                                            <el-col :span="4">
+                                                <img src="images/google.jpeg" alt="Project Media" height="40px" width="40px">
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <el-input v-model="form.google" placeholder="Google+ URL"></el-input>
+                                            </el-col>
+                                        </el-row>
+                                    </el-form-item>
+                                </el-form>
+                            </el-row>
+                            <el-row>
+                                <div align="right">
+                                    <el-button type="info" >Next</el-button>
+                                </div>
+                            </el-row>
+                    </el-row>
                     </el-col>
-                </el-tab-pane>
-
-                <el-tab-pane label="1.Basic Info">
-                  <el-row align="middle">                      
-                    <div align="middle">
-                        <h1>Event Name</h1>
-                        <p>Type</p>
-                        <hr align="middle" width="700px">
-                    </div>
-                  </el-row>
                 </el-tab-pane>
 
 
                 <el-tab-pane label="2.Sponsor Packages">
                     <div style="margin-top:40px"> </div>
                     <el-row>
-                        <el-col span="12">
+                        <el-col :span="12">
                             <el-card style="height:600px;width: 400px">
                                 <el-row>
                                     <div align="middle">
@@ -244,18 +247,19 @@
                                     </div>
                                     <el-row style="padding-top: 20px">
                                         Package name
-                                        <el-input placeholder="Please input" v-model="input" style="padding-top: 10px"></el-input>
+                                        <el-input placeholder="Please input" v-model="form.package.name" style="padding-top: 10px"></el-input>
                                     </el-row>
                                     <el-row style="padding-top: 20px">
                                         Description
-                                        <el-input placeholder="Please input" v-model="input" style="padding-top: 10px"></el-input>
+                                        <el-input placeholder="Please input" v-model="form.package.description" style="padding-top: 10px"></el-input>
                                     </el-row>
                                     <el-row height="100%" item-width="100%" style="padding-top: 20px">
                                         List
                                         <div id="myDIV" class="header">
                                             <el-row style="padding-top: 10px">
-                                                <input type="text" id="addInput" placeholder="Please input" >
-                                                <span onclick="addElement()" class="addBtn">Add</span>
+                                                <!-- <input type="text" id="addInput" placeholder="Please input">
+                                                <span onclick="addElement()" class="addBtn">Add</span> -->
+                                                <el-input placeholder="Please input" v-model="form.list" style="padding-top: 10px"></el-input>
                                             </el-row>
                                         </div>
 
@@ -287,12 +291,13 @@
                         <el-col :span="16">
                             <div id="myDIV" class="header">
                                 <el-row style="padding-top: 10px">
-                                    <input type="text" id="videoInput" placeholder="Video URL">
-                                    <span onclick="videoElement()" class="addBtn">Add</span>
+                                    <!-- <input type="text" id="videoInput" placeholder="Video URL">
+                                    <span onclick="videoElement()" class="addBtn">Add</span> -->
+                                    <el-input placeholder="Please input" v-model="form.video" style="padding-top: 10px"></el-input>
                                 </el-row>
                             </div>
-                            <ul id="videoUL">
-                            </ul>
+                            <!-- <ul id="videoUL">
+                            </ul> -->
                         </el-col>
                     </el-row>
                     <el-row>
@@ -303,12 +308,13 @@
 
                             <div id="myDIV" class="header">
                                 <el-row style="padding-top: 10px">
-                                    <input type="text" id="existInput" placeholder="Add your existing sponsors">
-                                    <span onclick="existElement()" class="addBtn">Add</span>
+                                    <!-- <input type="text" id="existInput" placeholder="Add your existing sponsors">
+                                    <span onclick="existElement()" class="addBtn">Add</span> -->
+                                    <el-input placeholder="Please input" v-model="form.confirmedSponsor" style="padding-top: 10px"></el-input>
                                 </el-row>
                             </div>
-                            <ul id="existUL">
-                            </ul>
+                            <!-- <ul id="existUL">
+                            </ul> -->
                         </el-col>
                     </el-row>
                     <el-row>
@@ -316,8 +322,8 @@
                             Describe your event
                         </el-col>
                         <el-col :span="16">
-                                <el-input type="textarea" :rows="5" placeholder="Please input" v-model="describearea">
-                                </el-input>
+                            <el-input type="textarea" :rows="5" placeholder="Please input" v-model="form.description">
+                            </el-input>
                         </el-col>
                     </el-row>
                     <div style="padding-top:20px"></div>
@@ -326,7 +332,7 @@
                             Why should a sponsor sponsors your event ?
                         </el-col>
                         <el-col :span="16">
-                            <el-input type="textarea" :rows="5" placeholder="Please input" v-model="whyarea">
+                            <el-input type="textarea" :rows="5" placeholder="Please input" v-model="form.reason">
                             </el-input>
                         </el-col>
                     </el-row>
@@ -336,15 +342,16 @@
                             Image
                         </el-col>
                         <el-col :span="16">
-
+                            <!-- TODO use Vue-->
                             <div id="myDIV" class="header">
                                 <el-row style="padding-top: 10px">
-                                    <input type="text" id="imageInput" placeholder="Image URL">
-                                    <span onclick="imageElement()" class="addBtn">Add</span>
+                                    <!-- <input type="text" id="imageInput" placeholder="Image URL">
+                                    <span onclick="imageElement()" class="addBtn">Add</span> -->
+                                    <el-input placeholder="Please input" v-model="form.image" style="padding-top: 10px"></el-input>
                                 </el-row>
                             </div>
-                            <ul id="imageUL">
-                            </ul>
+                            <!-- <ul id="imageUL">
+                            </ul> -->
                         </el-col>
                     </el-row>
                     <div style="padding-top:100px"></div>
@@ -362,13 +369,13 @@
                             <span>About yourself</span>
                         </div>
                         <div style="padding-left: 50px;padding-right:50px;padding-top:20px;padding-bottom:50px">
-                            <el-input type="textarea" :rows="15" placeholder="Please input" v-model="textarea">
+                            <el-input type="textarea" :rows="15" placeholder="Please input" v-model="form.about">
                             </el-input>
                         </div>
                     </el-row>
                     <el-row>
                         <div align="right">
-                            <el-button type="info">Save</el-button>
+                            <el-button type="info" @click="createEvent">Save</el-button>
                         </div>
                     </el-row>
                 </el-tab-pane>
@@ -383,8 +390,9 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.3.6/lib/index.js"></script>
     <script src="postevent.js"></script>
-
-    <script> //Add list
+    <!-- 
+    <script>
+        //Add list
         // Create a "close" button and append it to each list item
         var myNodelist = document.getElementsByTagName("LI");
         var i;
@@ -434,7 +442,8 @@
         }
     </script>
 
-    <script> //Video
+    <script>
+        //Video
         // Create a "close" button and append it to each list item
         var myNodelist = document.getElementsByTagName("LI");
         var i;
@@ -484,105 +493,107 @@
         }
     </script>
 
-    <script> //confirm sponsor add exsting sponsor
-            // Create a "close" button and append it to each list item
-            var myNodelist = document.getElementsByTagName("LI");
-            var i;
-            for (i = 0; i < myNodelist.length; i++) {
-                var span = document.createElement("SPAN");
-                var txt = document.createTextNode("\u00D7");
-                span.className = "close";
-                span.appendChild(txt);
-                myNodelist[i].appendChild(span);
-            }
+    <script>
+        //confirm sponsor add exsting sponsor
+        // Create a "close" button and append it to each list item
+        var myNodelist = document.getElementsByTagName("LI");
+        var i;
+        for (i = 0; i < myNodelist.length; i++) {
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            myNodelist[i].appendChild(span);
+        }
 
-            // Click on a close button to hide the current list item
-            var close = document.getElementsByClassName("close");
-            var i;
+        // Click on a close button to hide the current list item
+        var close = document.getElementsByClassName("close");
+        var i;
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function () {
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
+
+        // Create a new list item when clicking on the "Add" button
+        function existElement() {
+            var li = document.createElement("li");
+            var inputValue = document.getElementById("existInput").value;
+            var t = document.createTextNode(inputValue);
+            li.appendChild(t);
+            if (inputValue === '') {
+                alert("You must write something!");
+            } else {
+                document.getElementById("existUL").appendChild(li);
+            }
+            document.getElementById("existInput").value = "";
+
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            li.appendChild(span);
+
             for (i = 0; i < close.length; i++) {
                 close[i].onclick = function () {
                     var div = this.parentElement;
                     div.style.display = "none";
                 }
             }
+        }
+    </script>
 
-            // Create a new list item when clicking on the "Add" button
-            function existElement() {
-                var li = document.createElement("li");
-                var inputValue = document.getElementById("existInput").value;
-                var t = document.createTextNode(inputValue);
-                li.appendChild(t);
-                if (inputValue === '') {
-                    alert("You must write something!");
-                } else {
-                    document.getElementById("existUL").appendChild(li);
-                }
-                document.getElementById("existInput").value = "";
+    <script>
+        //image
+        // Create a "close" button and append it to each list item
+        var myNodelist = document.getElementsByTagName("LI");
+        var i;
+        for (i = 0; i < myNodelist.length; i++) {
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            myNodelist[i].appendChild(span);
+        }
 
-                var span = document.createElement("SPAN");
-                var txt = document.createTextNode("\u00D7");
-                span.className = "close";
-                span.appendChild(txt);
-                li.appendChild(span);
+        // Click on a close button to hide the current list item
+        var close = document.getElementsByClassName("close");
+        var i;
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function () {
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
 
-                for (i = 0; i < close.length; i++) {
-                    close[i].onclick = function () {
-                        var div = this.parentElement;
-                        div.style.display = "none";
-                    }
+        // Create a new list item when clicking on the "Add" button
+        function imageElement() {
+            var li = document.createElement("li");
+            var inputValue = document.getElementById("imageInput").value;
+            var t = document.createTextNode(inputValue);
+            li.appendChild(t);
+            if (inputValue === '') {
+                alert("You must write something!");
+            } else {
+                document.getElementById("imageUL").appendChild(li);
+            }
+            document.getElementById("imageInput").value = "";
+
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            li.appendChild(span);
+
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function () {
+                    var div = this.parentElement;
+                    div.style.display = "none";
                 }
             }
-        </script>
-
-         <script> //image
-                // Create a "close" button and append it to each list item
-                var myNodelist = document.getElementsByTagName("LI");
-                var i;
-                for (i = 0; i < myNodelist.length; i++) {
-                    var span = document.createElement("SPAN");
-                    var txt = document.createTextNode("\u00D7");
-                    span.className = "close";
-                    span.appendChild(txt);
-                    myNodelist[i].appendChild(span);
-                }
-
-                // Click on a close button to hide the current list item
-                var close = document.getElementsByClassName("close");
-                var i;
-                for (i = 0; i < close.length; i++) {
-                    close[i].onclick = function () {
-                        var div = this.parentElement;
-                        div.style.display = "none";
-                    }
-                }
-
-                // Create a new list item when clicking on the "Add" button
-                function imageElement() {
-                    var li = document.createElement("li");
-                    var inputValue = document.getElementById("imageInput").value;
-                    var t = document.createTextNode(inputValue);
-                    li.appendChild(t);
-                    if (inputValue === '') {
-                        alert("You must write something!");
-                    } else {
-                        document.getElementById("imageUL").appendChild(li);
-                    }
-                    document.getElementById("imageInput").value = "";
-
-                    var span = document.createElement("SPAN");
-                    var txt = document.createTextNode("\u00D7");
-                    span.className = "close";
-                    span.appendChild(txt);
-                    li.appendChild(span);
-
-                    for (i = 0; i < close.length; i++) {
-                        close[i].onclick = function () {
-                            var div = this.parentElement;
-                            div.style.display = "none";
-                        }
-                    }
-                }
-            </script>
+        }
+    </script> -->
 </body>
 
 </html>
