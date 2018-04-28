@@ -298,7 +298,6 @@ var app = new Vue({
   data() {
     return {
 
-      test: '123123123',
       event: {
         title: '',
         type: '',
@@ -351,16 +350,16 @@ var app = new Vue({
       this.event.startDate = '';
       this.event.endDate = '';
       this.event.demographics = '';
-      this.event.logo = '',
-      this.event.website = '',
-      this.event.socialMedia = '',
-      this.event.packages = '',
-      this.event.video = '',
-      this.event.image = '',
-      this.event.confirmedSponsors = '',
-      this.event.description = '',
-      this.event.reason = '',
-      this.event.about = ''
+      this.event.logo = '';
+      this.event.website = '';
+      this.event.socialMedia = '';
+      this.event.packages = '';
+      this.event.video = '';
+      this.event.image = '';
+      this.event.confirmedSponsors = '';
+      this.event.description = '';
+      this.event.reason = '';
+      this.event.about = '';
     }
     // .createUserWithPopup(provider)
     // .then(function(result) {

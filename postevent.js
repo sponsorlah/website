@@ -5,6 +5,9 @@
       return {
         tabPosition: 'left',
         labelPosition: 'top',
+        textarea:'',
+        describearea:'',
+        whyarea:'',
         formLabelAlign: {
           name: '',
           region: '',
@@ -19,7 +22,7 @@
           participants: '',
           range: '',
           link:'',
-          desc:'',
+        
         },
       };
     },

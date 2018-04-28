@@ -73,6 +73,7 @@
             border: 1px solid #dcdfe6;
             border-radius: 4px;
             width: 70%;
+            color: #555;
             padding: 10px;
             float: left;
             font-size: 14px;
@@ -95,8 +96,6 @@
         .addBtn:hover {
             background-color: #bbb;
         }
-
-      
     </style>
 </head>
 
@@ -113,7 +112,7 @@
         </el-row>
         <el-row>
             <el-tabs :tab-position="tabPosition" style="height: 100%;">
-                <el-tab-pane label="1.Basic Info">
+                <el-tab-pane label="1.Basic Info">                
                     <el-col :span="12" style="padding-right:50px;padding-left:50px">
                         <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign">
                             <el-form-item label="Title">
@@ -222,12 +221,12 @@
                                         List
                                         <div id="myDIV" class="header">
                                             <el-row style="padding-top: 10px">
-                                                <input type="text" id="myInput" placeholder="Please input">
-                                                <span onclick="newElement()" class="addBtn">Add</span>
+                                                <input type="text" id="addInput" placeholder="Please input" >
+                                                <span onclick="addElement()" class="addBtn">Add</span>
                                             </el-row>
                                         </div>
 
-                                        <ul id="myUL">
+                                        <ul id="addUL">
                                         </ul>
                                     </el-row>
 
@@ -246,20 +245,97 @@
                     </el-row>
                 </el-tab-pane>
                 <el-tab-pane label="3.Pitch your event">
-                </el-tab-pane>
-                <el-tab-pane label="4.About yourself">
-                    <el-form ref="form" :model="form" label-width="120px">
-                        <el-row>
-                            <div style="padding-left:50px">
-                                Activity Form
+
+                    <el-row>
+                        <el-col :span="8" style="padding-left:60px">
+                            Video
+                        </el-col>
+                        <el-col :span="16">
+                            <div id="myDIV" class="header">
+                                <el-row style="padding-top: 10px">
+                                    <input type="text" id="videoInput" placeholder="Video URL">
+                                    <span onclick="videoElement()" class="addBtn">Add</span>
+                                </el-row>
                             </div>
-                        </el-row>
-                        <el-row>
-                            <el-form-item>
-                                <el-input type="textarea" v-model="form.desc"></el-input>
-                            </el-form-item>
-                        </el-row>
-                    </el-form>
+                            <ul id="videoUL">
+                            </ul>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="8" style="padding-left:60px">
+                            Confirmed sponsors
+                        </el-col>
+                        <el-col :span="16">
+
+                            <div id="myDIV" class="header">
+                                <el-row style="padding-top: 10px">
+                                    <input type="text" id="existInput" placeholder="Add your existing sponsors">
+                                    <span onclick="existElement()" class="addBtn">Add</span>
+                                </el-row>
+                            </div>
+                            <ul id="existUL">
+                            </ul>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="8" style="padding-left:60px">
+                            Describe your event
+                        </el-col>
+                        <el-col :span="16">                      
+                                <el-input type="textarea" :rows="5" placeholder="Please input" v-model="describearea">
+                                </el-input>                   
+                        </el-col>
+                    </el-row>
+                    <div style="padding-top:20px"></div>
+                    <el-row>
+                        <el-col :span="8" style="padding-left:60px">
+                            Why should a sponsor sponsors your event ?
+                        </el-col>
+                        <el-col :span="16">
+                            <el-input type="textarea" :rows="5" placeholder="Please input" v-model="whyarea">
+                            </el-input>
+                        </el-col>
+                    </el-row>
+                    <div style="padding-top:20px"></div>
+                    <el-row>
+                        <el-col :span="8" style="padding-left:60px">
+                            Image
+                        </el-col>
+                        <el-col :span="16">
+
+                            <div id="myDIV" class="header">
+                                <el-row style="padding-top: 10px">
+                                    <input type="text" id="imageInput" placeholder="Image URL">
+                                    <span onclick="imageElement()" class="addBtn">Add</span>
+                                </el-row>
+                            </div>
+                            <ul id="imageUL">
+                            </ul>
+                        </el-col>
+                    </el-row>
+                    <div style="padding-top:100px"></div>
+                    <el-row>
+                        <div align="right">
+                            <el-button type="info">Next</el-button>
+                        </div>
+                    </el-row>
+                </el-tab-pane>
+
+                <el-tab-pane label="4.About yourself">
+                    <el-row>
+                        <div style="padding-left:50px;padding-top:20px">
+                            <span>About yourself</span>
+                        </div>
+                        <div style="padding-left: 50px;padding-right:50px;padding-top:20px;padding-bottom:50px">
+                            <el-input type="textarea" :rows="15" placeholder="Please input" v-model="textarea">
+                            </el-input>
+                        </div>
+                    </el-row>
+                    <el-row>
+                        <div align="right">
+                            <el-button type="info">Save</el-button>
+                        </div>
+                    </el-row>
                 </el-tab-pane>
             </el-tabs>
         </el-row>
@@ -277,7 +353,7 @@
     <script src="https://unpkg.com/element-ui@2.3.6/lib/index.js"></script>
     <script src="postevent.js"></script>
 
-    <script>
+    <script> //Add list
         // Create a "close" button and append it to each list item
         var myNodelist = document.getElementsByTagName("LI");
         var i;
@@ -299,26 +375,18 @@
             }
         }
 
-        // Add a "checked" symbol when clicking on a list item
-        var list = document.querySelector('ul');
-        list.addEventListener('click', function (ev) {
-            if (ev.target.tagName === 'LI') {
-                ev.target.classList.toggle('checked');
-            }
-        }, false);
-
         // Create a new list item when clicking on the "Add" button
-        function newElement() {
+        function addElement() {
             var li = document.createElement("li");
-            var inputValue = document.getElementById("myInput").value;
+            var inputValue = document.getElementById("addInput").value;
             var t = document.createTextNode(inputValue);
             li.appendChild(t);
             if (inputValue === '') {
                 alert("You must write something!");
             } else {
-                document.getElementById("myUL").appendChild(li);
+                document.getElementById("addUL").appendChild(li);
             }
-            document.getElementById("myInput").value = "";
+            document.getElementById("addInput").value = "";
 
             var span = document.createElement("SPAN");
             var txt = document.createTextNode("\u00D7");
@@ -334,6 +402,156 @@
             }
         }
     </script>
+
+    <script> //Video
+        // Create a "close" button and append it to each list item
+        var myNodelist = document.getElementsByTagName("LI");
+        var i;
+        for (i = 0; i < myNodelist.length; i++) {
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            myNodelist[i].appendChild(span);
+        }
+
+        // Click on a close button to hide the current list item
+        var close = document.getElementsByClassName("close");
+        var i;
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function () {
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
+
+        // Create a new list item when clicking on the "Add" button
+        function videoElement() {
+            var li = document.createElement("li");
+            var inputValue = document.getElementById("videoInput").value;
+            var t = document.createTextNode(inputValue);
+            li.appendChild(t);
+            if (inputValue === '') {
+                alert("You must write something!");
+            } else {
+                document.getElementById("videoUL").appendChild(li);
+            }
+            document.getElementById("videoInput").value = "";
+
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            li.appendChild(span);
+
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function () {
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+        }
+    </script>
+
+    <script> //confirm sponsor add exsting sponsor
+            // Create a "close" button and append it to each list item
+            var myNodelist = document.getElementsByTagName("LI");
+            var i;
+            for (i = 0; i < myNodelist.length; i++) {
+                var span = document.createElement("SPAN");
+                var txt = document.createTextNode("\u00D7");
+                span.className = "close";
+                span.appendChild(txt);
+                myNodelist[i].appendChild(span);
+            }
+    
+            // Click on a close button to hide the current list item
+            var close = document.getElementsByClassName("close");
+            var i;
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function () {
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+    
+            // Create a new list item when clicking on the "Add" button
+            function existElement() {
+                var li = document.createElement("li");
+                var inputValue = document.getElementById("existInput").value;
+                var t = document.createTextNode(inputValue);
+                li.appendChild(t);
+                if (inputValue === '') {
+                    alert("You must write something!");
+                } else {
+                    document.getElementById("existUL").appendChild(li);
+                }
+                document.getElementById("existInput").value = "";
+    
+                var span = document.createElement("SPAN");
+                var txt = document.createTextNode("\u00D7");
+                span.className = "close";
+                span.appendChild(txt);
+                li.appendChild(span);
+    
+                for (i = 0; i < close.length; i++) {
+                    close[i].onclick = function () {
+                        var div = this.parentElement;
+                        div.style.display = "none";
+                    }
+                }
+            }
+        </script>
+
+         <script> //image
+                // Create a "close" button and append it to each list item
+                var myNodelist = document.getElementsByTagName("LI");
+                var i;
+                for (i = 0; i < myNodelist.length; i++) {
+                    var span = document.createElement("SPAN");
+                    var txt = document.createTextNode("\u00D7");
+                    span.className = "close";
+                    span.appendChild(txt);
+                    myNodelist[i].appendChild(span);
+                }
+        
+                // Click on a close button to hide the current list item
+                var close = document.getElementsByClassName("close");
+                var i;
+                for (i = 0; i < close.length; i++) {
+                    close[i].onclick = function () {
+                        var div = this.parentElement;
+                        div.style.display = "none";
+                    }
+                }
+        
+                // Create a new list item when clicking on the "Add" button
+                function imageElement() {
+                    var li = document.createElement("li");
+                    var inputValue = document.getElementById("imageInput").value;
+                    var t = document.createTextNode(inputValue);
+                    li.appendChild(t);
+                    if (inputValue === '') {
+                        alert("You must write something!");
+                    } else {
+                        document.getElementById("imageUL").appendChild(li);
+                    }
+                    document.getElementById("imageInput").value = "";
+        
+                    var span = document.createElement("SPAN");
+                    var txt = document.createTextNode("\u00D7");
+                    span.className = "close";
+                    span.appendChild(txt);
+                    li.appendChild(span);
+        
+                    for (i = 0; i < close.length; i++) {
+                        close[i].onclick = function () {
+                            var div = this.parentElement;
+                            div.style.display = "none";
+                        }
+                    }
+                }
+            </script>
 </body>
 
 </html>

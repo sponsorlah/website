@@ -21,7 +21,7 @@ var app = new Vue({
   el: '#app',
   data() {
     return {
-
+      radio: '1',
       form: {
 
       }
