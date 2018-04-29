@@ -1,29 +1,46 @@
-var config = {
-  apiKey: "AIzaSyCjrZ2sbCKlOEhru94U4_IFaKzI9xKTEmM",
-  authDomain: "sponsorlah-c5bf1.firebaseapp.com",
-  databaseURL: "https://sponsorlah-c5bf1.firebaseio.com",
-  projectId: "sponsorlah-c5bf1",
-  storageBucket: "sponsorlah-c5bf1.appspot.com",
-  messagingSenderId: "474296941108"
-};
-firebase.initializeApp(config);
-var db = firebase.database();
-
+var namesRef = db.ref("names/");
 new Vue({
-  el: '#test1',
+  el: "#app",
+
+  firebase: {
+    names: namesRef
+  },
+
   data() {
     return {
-        data1: ''
-    }
+      name: ""
+    };
   },
-  methods:{
-    getData: function(){
-      db.ref('data1/entry01').on('value', (data)=>{
-        this.data1 = data.val();
-      });
+
+  methods: {
+    addName() {
+      namesRef.push({ name: this.name, edit: false });
+    },
+
+    removeName(key) {
+      namesRef.child(key).remove();
+    },
+
+    setEditName(key) {
+      namesRef.child(key).update({ edit: true });
+    },
+
+    cancelEdit(key) {
+      namesRef.child(key).update({ edit: false });
+    },
+
+    saveEdit(person) {
+      const key = person[".key"];
+      namesRef.child(key).set({ name: person.name, edit: false });
     }
-  },
-  mounted(){
-    this.getData();
+
+    // getData: function(){
+    //   db.ref('data1/entry01').on('value', (data)=>{
+    //     this.data1 = data.val();
+    //   });
+    // }
   }
-})
+  // mounted(){
+  //   this.getData();
+  // }
+});

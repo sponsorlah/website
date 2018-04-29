@@ -244,82 +244,70 @@ Vue.component("navbar", {
     };
   },
 
-  firebase: {
-    profiles: profilesRef
-  },
+  firebase: {},
 
   methods: {
     redirect(url) {
       window.location.href = url;
-    },
-    signUp() {
-      var provider = new firebase.auth.GoogleAuthProvider();
-
-      firebase
-        .auth()
-        .createUserWithPopup(provider)
-        .then(function(result) {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = result.credential.accessToken;
-          // The signed-in user info.
-          var user = result.user;
-          profilesRef.push(this.newProfile);
-          this.newProfile.name = "";
-          this.newProfile.email = "";
-          this.newProfile.contact = "";
-          this.newProfile.password = "";
-        })
-        .catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // The email of the user's account used.
-          var email = error.email;
-          // The firebase.auth.AuthCredential type that was used.
-          var credential = error.credential;
-          // ...
-        });
     }
   }
 });
 
-var profilesRef = db.ref("users/profiles");
-var eventRef = db.ref("users/eventCreated");
+// // firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+// //   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+// //   // ...
+// // });
 
-// firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-//   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-//   // ...
+// firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     var profilesRef = db.ref("users/");
+//     var app = new Vue({
+//       el: "#app",
+
+//       data() {
+//         return {};
+//       },
+
+//       firebase: {
+//         // simple syntax, bind as an array by default
+//         anArray: db.ref("url/to/my/array"),
+//         // can also bind to a query
+//         // anArray: db.ref('url/to/my/collection').limitToLast(25)
+//         // full syntax
+//         anObject: {
+//           source: db.ref("url/to/my/object"),
+//           // optionally bind as an object
+//           asObject: true,
+//           // optionally provide the cancelCallback
+//           cancelCallback: function() {},
+//           // this is called once the data has been retrieved from firebase
+//           readyCallback: function() {}
+//         }
+//       },
+
+//       methods: {}
+//     });
+//   } else {
+//     var app = new Vue({
+//       el: "#app",
+
+//       data() {
+//         return {};
+//       },
+
+//       firebase: {},
+
+//       methods: {}
+//     });
+//   }
 // });
 
+var profilesRef = db.ref("users/");
 var app = new Vue({
   el: "#app",
 
   data() {
-    return {
-      event: {
-        title: '',
-        type: '',
-        location: '',
-        startDate: '',
-        endDate: '',
-        demographics: '',
-        logo: '',
-        website: '',
-        socialMedia: '',
-        packages: 
-        {
-          title: '',
-          description: '',
-          items: '',
-        },
-        video: '',
-        image: '',
-        confirmedSponsors: '',
-        description: '',
-        reason: '',
-        about: ''
-      }
-    };
+    return {};
   },
 
   firebase: {
@@ -339,37 +327,5 @@ var app = new Vue({
     }
   },
 
-  methods: {
-    createEvent() {
-      eventRef.push(this.event);
-      this.event.title = '';
-      this.event.type = '';
-      this.event.location = '';
-      this.event.startDate = '';
-      this.event.endDate = '';
-      this.event.demographics = '';
-      this.event.logo = '',
-      this.event.website = '',
-      this.event.socialMedia = '',
-      this.event.packages = '',
-      this.event.video = '',
-      this.event.image = '',
-      this.event.confirmedSponsors = '',
-      this.event.description = '',
-      this.event.reason = '',
-      this.event.about = ''
-    }
-    // .createUserWithPopup(provider)
-    // .then(function(result) {
-    //   // This gives you a Google Access Token. You can use it to access the Google API.
-    //   var token = result.credential.accessToken;
-    //   // The signed-in user info.
-    //   var user = result.user;
-    //   profilesRef.push(this.newProfile);
-    //   this.newProfile.name = "";
-    //   this.newProfile.email = "";
-    //   this.newProfile.contact = "";
-    //   this.newProfile.password = "";
-    // })
-  }
+  methods: {}
 });

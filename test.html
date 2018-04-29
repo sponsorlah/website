@@ -1,26 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Profile</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+  <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-database.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <!-- <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script> -->
+
+  <script src="firebase.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" /> -->
+  <!-- <script type="text/javascript" src="firebaseUI.js"></script> -->
   <link rel="stylesheet" href="profile.css">
 </head>
+
 <body>
-  <div id="test1">
-    <p>{{data1}}</p>
-    <button v-on:click="getData">asdasd</button>
+  <div id="app">
+    <!-- <div>
+      <label>Name:</label>
+      <input type="text" v-model="name">
+      <button @click="addName">Add</button>
+    </div>
+    <div>
+      <ul>
+        <li v-for="personName of names" :key="personName['.key']">
+          <div v-if="!personName.edit">
+            <p>{{ personName.name }}</p>
+            <button @click="removeName(personName['.key'])">Remove</button>
+            <button @click="setEditName(personName['.key'])">Edit</button>
+          </div>
+          <div v-else>
+            <input type="text" v-model="personName.name">
+            <button @click="saveEdit(personName)">Save</button>
+            <button @click="cancelEdit(personName['.key'])">Cancel</button>
+          </div>
+        </li>
+      </ul>
+    </div> -->
+
+    <div>
+      <ul>
+        <li v-for= "event of events" :key="event['.key']">
+          <p>{{ event.title }}</p>
+        </li>
+      </ul>
+    </div>
+
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-database.js"></script>
-  <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
-  <!-- import CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-  <!-- import JavaScript -->
-  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-  <script src="firebasetest.js"></script>
+  <script src="showcase.js"></script>
 </body>
+
 </html>
